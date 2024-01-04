@@ -2,8 +2,33 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
+import { SimpleTable } from './components/Table/simple-table'
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import djs from "dayjs";
+import { randEmail, randFullName, randPastDate, randPhoneNumber } from "@ngneat/falso";
 
 const inter = Inter({ subsets: ['latin'] })
+
+djs.extend(advancedFormat);
+
+// Generate mock data for our table
+const data = Array(20)
+  .fill(1)
+  .map(() => {
+    const date = randPastDate();
+    return {
+      name: randFullName(),
+      contact: {
+        email: randEmail(),
+        phone: randPhoneNumber()
+      },
+      dob: {
+        year: date.getFullYear(),
+        month: date.getMonth(),
+        day: date.getDate()
+      }
+    };
+  });
 
 export default function Home() {
   return (
@@ -39,74 +64,25 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
+        <div style={{ height:'100%', width: '100%'}}>
+          <SimpleTable
+            data={data}
+            useCards
+            dataKeyFn={item => item?.name || "empty"}
+            cols={[
+              ["name", "Name", "name"],
+              ["email", "Email", "contact.email"],
+              ["phone", "Phone", "contact.phone"],
+              [
+                "dob",
+                <i>Date Of Birth</i>,
+                item =>
+                  djs(`${item.dob.year}-${item.dob.month}-${item.dob.day}`).format(
+                    "Do MMMM YYYY"
+                  )
+              ]
+            ]}
           />
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
         </div>
       </main>
     </>
