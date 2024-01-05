@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { Table as ChakraTable, Thead as ChakraThead, Tr as ChakraTr, Td as ChakraTd, Tbody as ChakraTbody, Tfoot as ChakraTfoot, Th as ChakraTh, Box } from "@chakra-ui/react";
 
-export const Table = styled.table`
+export const Table = styled(ChakraTable)`
   width: 100%;
   border-collapse: collapse;
   font-size: 0.85rem;
@@ -10,27 +11,27 @@ export const Table = styled.table`
   }
 `;
 
-export const Thead = styled.thead``;
+export const Thead = styled(ChakraThead)``;
 
-export const Tr = styled.tr`
+export const Tr = styled(ChakraTr)`
   border-bottom: 1px solid #f2f2f2;
 `;
 
-export const Th = styled.th`
+export const Th = styled(ChakraTh)`
   text-align: left;
   padding: 0.85rem;
   white-space: nowrap;
 `;
 
-export const Tbody = styled.tbody``;
+export const Tbody = styled(ChakraTbody)``;
 
-export const Td = styled.td`
+export const Td = styled(ChakraTd)`
   text-align: left;
   padding: 0.85rem;
   vertical-align: top;
 `;
 
-export const ThFlex = styled.div`
+export const ThFlex = styled(Box)`
   display: flex;
   padding: 0.85rem;
   justify-content: space-between;

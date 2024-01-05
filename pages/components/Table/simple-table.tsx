@@ -1,4 +1,3 @@
-'use client'
 import React, { useEffect, useMemo, useState } from "react";
 import { SimpleTableProps } from "./types";
 import { Table, Tbody, Td, Th, Thead, ThFlex, Tr } from "./table";
@@ -129,7 +128,7 @@ export const SimpleTable = <T,>({
                                     <Table>
                                         <Tbody>
                                             {transformColumns(cols, windowWidth).map(
-                                                ({ label, resolver, tdAttrs }, colIdx) => {
+                                                ({ id, label, resolver, tdAttrs, sortable }, colIdx) => {
                                                     const cellValue = resolveCellValue(
                                                         item,
                                                         resolver,
@@ -137,8 +136,14 @@ export const SimpleTable = <T,>({
                                                     );
 
                                                     return (
-                                                        <Tr key={colIdx} {...tdAttrs} /* Not a mistake */>
-                                                            <Td>{buildTd(label)}</Td>
+                                                        <Tr key={colIdx} {...tdAttrs} onClick={() => sortable && onSort(cycleSortData(sort, id))} /* Not a mistake */>
+                                                            <Td display={'flex'} alignItems={'center'}>{buildTd(label)} {sortable && (sort.id === id && sort.dir === "asc" ? (
+                                                                <TiArrowSortedUp />
+                                                            ) : sort.id === id && sort.dir === "desc" ? (
+                                                                <TiArrowSortedDown />
+                                                            ) : (
+                                                                <TiArrowUnsorted color="#e3e3e3" />
+                                                            ))}</Td>
                                                             <Td>{buildTd(cellValue)}</Td>
                                                         </Tr>
                                                     );

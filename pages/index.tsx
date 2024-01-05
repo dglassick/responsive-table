@@ -6,6 +6,8 @@ import { SimpleTable } from './components/Table/simple-table'
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import djs from "dayjs";
 import { randEmail, randFullName, randPastDate, randPhoneNumber } from "@ngneat/falso";
+import { SortData } from './components/Table/types'
+import { useState } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -31,6 +33,9 @@ const data = Array(20)
   });
 
 export default function Home() {
+
+  const [sort, setSort] = useState<SortData>({ id: "name", dir: "asc" });
+
   return (
     <>
       <Head>
@@ -45,36 +50,25 @@ export default function Home() {
             Get started by editing&nbsp;
             <code className={styles.code}>pages/index.tsx</code>
           </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
         </div>
 
-        <div style={{ height:'100%', width: '100%'}}>
+        <div style={{ height:'100%', width: '100%', padding: '2rem'}}>
           <SimpleTable
             data={data}
             useCards
+            sort={sort}
+            onSort={(value) => {
+              console.log(value)
+              setSort(value)
+            }}
             dataKeyFn={item => item?.name || "empty"}
             cols={[
               ["name", "Name", "name"],
-              ["email", "Email", "contact.email"],
+              ["email", "Email", "contact.email", { sortable: false }],
               ["phone", "Phone", "contact.phone"],
               [
                 "dob",
+                // eslint-disable-next-line react/jsx-key
                 <i>Date Of Birth</i>,
                 item =>
                   djs(`${item.dob.year}-${item.dob.month}-${item.dob.day}`).format(
