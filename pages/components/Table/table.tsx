@@ -15,6 +15,9 @@ export const Thead = styled(ChakraThead)``;
 
 export const Tr = styled(ChakraTr)`
   border-bottom: 1px solid #f2f2f2;
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 export const Th = styled(ChakraTh)`

@@ -69,7 +69,7 @@ export const SimpleTable = <T,>({
     console.log(windowWidth, breakpointWidth)
 
     return (
-        <SimpleTableRoot {...rest}>
+        <SimpleTableRoot {...rest} variant={(windowWidth > breakpointWidth || !useCards)  && 'striped'}>
             {(windowWidth > breakpointWidth || !useCards) && (
                 <Thead {...theadAttrs}>
                     <Tr>
@@ -136,8 +136,8 @@ export const SimpleTable = <T,>({
                                                     );
 
                                                     return (
-                                                        <Tr key={colIdx} {...tdAttrs} onClick={() => sortable && onSort(cycleSortData(sort, id))} /* Not a mistake */>
-                                                            <Td display={'flex'} alignItems={'center'}>{buildTd(label)} {sortable && (sort.id === id && sort.dir === "asc" ? (
+                                                        <Tr key={colIdx} {...tdAttrs}  /* Not a mistake */ >
+                                                            <Td display={'flex'} alignItems={'center'} onClick={() => sortable && onSort(cycleSortData(sort, id))}>{buildTd(label)} {sortable && (sort.id === id && sort.dir === "asc" ? (
                                                                 <TiArrowSortedUp />
                                                             ) : sort.id === id && sort.dir === "desc" ? (
                                                                 <TiArrowSortedDown />

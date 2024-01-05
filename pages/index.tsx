@@ -5,9 +5,10 @@ import styles from '@/styles/Home.module.css'
 import { SimpleTable } from './components/Table/simple-table'
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import djs from "dayjs";
-import { randEmail, randFullName, randPastDate, randPhoneNumber } from "@ngneat/falso";
+import { randEmail, randFullName, randNumber, randPastDate, randPhoneNumber } from "@ngneat/falso";
 import { SortData } from './components/Table/types'
 import { useState } from 'react'
+import { Button, Checkbox } from '@chakra-ui/react'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +20,7 @@ const data = Array(20)
   .map(() => {
     const date = randPastDate();
     return {
+      id: randNumber(),
       name: randFullName(),
       contact: {
         email: randEmail(),
@@ -34,7 +36,20 @@ const data = Array(20)
 
 export default function Home() {
 
+  const [checked, setChecked] = useState<any[]>([]);
   const [sort, setSort] = useState<SortData>({ id: "name", dir: "asc" });
+
+  const handleChecked = (id) => {
+    console.log(id)
+    if(checked.includes(id)) {
+      const removed = checked.filter((item) => item !== id);
+      setChecked(removed)
+    } else {
+      setChecked([...checked, id])
+    }
+  }
+
+  console.log(checked)
 
   return (
     <>
@@ -63,9 +78,12 @@ export default function Home() {
             }}
             dataKeyFn={item => item?.name || "empty"}
             cols={[
+              ["id", "Selected", item => <Checkbox isChecked={checked.includes(item.id)} onChange={() => handleChecked(item.id)} />],
               ["name", "Name", "name"],
               ["email", "Email", "contact.email", { sortable: false }],
-              ["phone", "Phone", "contact.phone"],
+              ["phone", "Phone", 
+                item => <Button size={'sm'} h={'24px'} m={0} onClick={() => console.log(item)}>View</Button>
+              ],
               [
                 "dob",
                 // eslint-disable-next-line react/jsx-key
