@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { SimpleTableProps } from "./types";
 import { Table, Tbody, Td, Th, Thead, ThFlex, Tr } from "./table";
 import {
@@ -53,19 +53,7 @@ export const SimpleTable = <T,>({
             return tdBuilder?.(value) || value;
         } else return value;
     };
-
-    // useEffect(() => {
-    //     const onResize = () => {
-    //         setWindowWidth(window.innerWidth);
-    //     };
-
-    //     window.addEventListener("resize", onResize);
-
-    //     return () => {
-    //         window.removeEventListener("resize", onResize);
-    //     };
-    // }, []);
-
+    
     console.log(windowWidth, breakpointWidth)
 
     return (
