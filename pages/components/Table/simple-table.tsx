@@ -69,7 +69,7 @@ export const SimpleTable = <T,>({
     console.log(windowWidth, breakpointWidth)
 
     return (
-        <SimpleTableRoot {...rest} variant={(windowWidth > breakpointWidth || !useCards)  && 'striped'}>
+        <SimpleTableRoot {...rest} variant={windowWidth > breakpointWidth || !useCards  ? 'striped' : ''}>
             {(windowWidth > breakpointWidth || !useCards) && (
                 <Thead {...theadAttrs}>
                     <Tr>

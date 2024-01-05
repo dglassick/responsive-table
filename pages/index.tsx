@@ -79,11 +79,11 @@ export default function Home() {
             dataKeyFn={item => item?.name || "empty"}
             cols={[
               ["id", "Selected", item => <Checkbox isChecked={checked.includes(item.id)} onChange={() => handleChecked(item.id)} />],
-              ["name", "Name", "name"],
-              ["email", "Email", "contact.email", { sortable: false }],
-              ["phone", "Phone", 
+              ["id", "View", 
                 item => <Button size={'sm'} h={'24px'} m={0} onClick={() => console.log(item)}>View</Button>
               ],
+              ["name", "Name", "name"],
+              ["email", "Email", "contact.email", { sortable: false }],
               [
                 "dob",
                 // eslint-disable-next-line react/jsx-key
